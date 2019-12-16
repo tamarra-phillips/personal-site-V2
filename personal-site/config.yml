@@ -22,8 +22,6 @@ PATHS:
   sass:
     - "node_modules/foundation-sites/scss"
     - "node_modules/motion-ui/src"
-    - "src/assets/scss/owl.carousel.min.css"
-    - "src/assets/scss/twentytwenty.css"
   # Paths to JavaScript entry points for webpack to bundle modules
   entries:
     - "src/assets/js/app.js"
