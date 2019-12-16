@@ -1,0 +1,194 @@
+@mixin carousel-button {
+  background: rgba(73, 73, 119, 0.9);
+  color: $off-white;
+  height: 90px;
+  width: 36px;
+  font-size: 3rem;
+  position: absolute;
+  line-height: .1;
+}
+
+header {
+  background: $primary;
+  color: $medium-gray;
+  margin: 0 0 1rem;
+
+  a {
+    box-shadow: none;
+  }
+
+  h1 {
+    font-family: 'Courgette', cursive;
+  }
+
+  .title-bar {
+    background-color: $primary;
+    padding: 1rem .5rem;
+    margin: 0 0 .5rem 0;
+
+    .title-bar-title{
+      position: absolute;
+      right: 12px;
+      top: 8px;
+    }
+  }
+
+  .topbar {
+    padding: 10px 20px;
+
+    @include breakpoint(small only) {
+      position: absolute;
+      width: 100%;
+      background: $primary;
+      margin: -8px 0 0;
+    }
+
+    li {
+      a {
+        background: $primary;
+        color: $medium-gray;
+        padding: 0.7rem;
+      }
+    }
+  }
+}
+
+.key-points{
+  text-align: center;
+
+  &.grey {
+    background: $light-gray;
+  }
+
+  h4, .small-order-2 {
+    margin: 0 0 2rem;
+  }
+
+}
+
+a {
+  box-shadow: inset 0 -1px 0 0 $white, inset 0 -3px 0 0 rgba(43, 43, 70, .4);
+}
+
+.resume {
+  li {
+    margin: 0 0 0 13px;
+  }
+
+  .nested{
+    list-style-type: circle;
+  }
+}
+
+
+
+.twentytwenty-wrapper {
+  box-shadow: 0px 12px 12px 8px rgba(73, 73, 119, 0.4);
+  margin: 0 0 3.5rem;
+}
+
+.owl-carousel {
+  margin: 0 0 3.5rem;
+
+  .owl-nav {
+    position: absolute;
+    top: 36%;
+    width: 100%;
+
+    button {
+
+      &.owl-prev {
+        @include carousel-button
+        left: -30px;
+
+        span {
+          position: absolute;
+          top: 43%;
+          left: 25%;
+        }
+      }
+
+      &.owl-next {
+        @include carousel-button
+        right: -30px;
+
+        span {
+          position: absolute;
+          top: 43%;
+          right: 25%;
+        }
+      }
+    }
+  }
+
+  @include breakpoint(small only) {
+    .owl-nav {
+      top: 12%;
+
+      button {
+
+        &.owl-prev {
+          @include carousel-button
+          left: -20px;
+        }
+
+        &.owl-next {
+          @include carousel-button
+          right: -20px;
+        }
+      }
+
+    }
+  }
+
+  .owl-item {
+    figcaption {
+      background: rgba(73, 73, 119, 0.9);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 20px;
+      color: $off-white;
+    }
+
+    @include breakpoint(medium down) {
+      figcaption {
+        position: relative;
+      }
+    }
+
+    img {
+      width: auto;
+      max-height: 666px;
+      margin: auto;
+    }
+
+  }
+}
+
+
+footer {
+  margin: 3rem 0 0;
+
+  a {
+    box-shadow: none;
+  }
+
+  .callout {
+    margin: 0;
+  }
+
+  .footer-base {
+    background-color: $primary;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%),
+    radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%);
+    background-size:80px 80px;
+    background-position:0 0, 40px 40px;
+    padding: 26px;
+    color: $medium-gray;
+
+    .show-for-medium{
+      text-align: right;
+    }
+  }
+}
