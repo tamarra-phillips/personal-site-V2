@@ -28,3 +28,5 @@ PATHS:
     - "src/assets/js/jquery.event.move.js"
     - "src/assets/js/jquery.twentytwenty.js"
     - "src/assets/js/owl.carousel.min.js"
+    - "src/assets/js/modernizr.js"
+    - "src/assets/js/main.js"
