@@ -90,6 +90,16 @@ a {
   }
 }
 
+//TTI tti-examples
+.tti-examples {
+  figure {
+    margin: 0 0 3rem;
+  }
+
+  figcaption {
+    font-size: 14px;
+  }
+}
 
 //Twenty-Twenty Comparison Section
 .twentytwenty-wrapper {
@@ -136,7 +146,6 @@ a {
     width: 100%;
 
     button {
-
       &.owl-prev {
         @include carousel-button
         left: -10px;
@@ -159,11 +168,25 @@ a {
         }
       }
     }
+
+    @include breakpoint(small only) {
+      button {
+        &.owl-prev {
+          left: 0;
+        }
+
+        &.owl-next {
+          right: 0;
+        }
+      }
+    }
   }
+
+
 
   @include breakpoint(small only) {
     .owl-nav {
-      top: 12%;
+      top: 20%;
     }
   }
 

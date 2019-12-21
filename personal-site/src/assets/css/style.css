@@ -34,6 +34,12 @@ ul li {
   display: inherit;
 }
 
+.tti-carousel {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 /* --------------------------------
 
 Portfolio Navigation
@@ -377,7 +383,7 @@ Portfolio Projects
   background-image: url(../img/TTI/Netscaler1.jpg);
 }
 .cd-3d-portfolio .projects .row > li.project-9 .project-image::before {
-  background-image: url(../img/certs/GA_Beginners_Cert.png);
+  background-image: url(../img/certs/blank-cert.jpg);
 }
 .cd-3d-portfolio .projects .project-title {
   position: relative;
@@ -631,7 +637,7 @@ Back to top
 .cd-top {
   position: fixed;
   z-index: 3;
-  bottom: 40px;
+  bottom: 0;
   right: 5%;
   display: inline-block;
   height: 48px;
