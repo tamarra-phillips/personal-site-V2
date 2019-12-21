@@ -10,7 +10,7 @@
 
 header {
   background: $primary;
-  color: $medium-gray;
+  color: $light-gray;
   margin: 0 0 1rem;
 
   a {
@@ -41,12 +41,13 @@ header {
       width: 100%;
       background: $primary;
       margin: -8px 0 0;
+      z-index: 300;
     }
 
     li {
       a {
         background: $primary;
-        color: $medium-gray;
+        color: $light-gray;
         padding: 0.7rem;
       }
     }
@@ -57,13 +58,22 @@ header {
   text-align: center;
 
   &.grey {
-    background: $light-gray;
+    background: $medium-gray;
   }
 
   h4, .small-order-2 {
     margin: 0 0 2rem;
   }
 
+  @include breakpoint(medium) {
+    .left-text {
+      padding: 0 0 0 2rem;
+    }
+
+    .right-text {
+      padding: 0 2rem 0 0;
+    }
+  }
 }
 
 a {
@@ -81,12 +91,42 @@ a {
 }
 
 
-
+//Twenty-Twenty Comparison Section
 .twentytwenty-wrapper {
-  box-shadow: 0px 12px 12px 8px rgba(73, 73, 119, 0.4);
+  box-shadow: 2px 6px 4px 4px rgba(73, 73, 119, 0.4);
   margin: 0 0 3.5rem;
 }
 
+.twentytwenty-handle {
+    border: 3px solid #a7a7c9;
+}
+
+.twentytwenty-right-arrow {
+    border-left: 6px solid #a7a7c9;
+}
+
+.twentytwenty-left-arrow {
+    border-right: 6px solid #a7a7c9;
+}
+
+.twentytwenty-before-label:before, .twentytwenty-after-label:before {
+    background: rgba(118, 118, 171, 0.85);
+    color: #e9e9e9;
+}
+
+.twentytwenty-horizontal .twentytwenty-handle:before, .twentytwenty-horizontal .twentytwenty-handle:after {
+    background: #a7a7c9;
+}
+
+.twentytwenty-horizontal .twentytwenty-handle:before {
+    box-shadow: 0 3px 0 #a7a7c9, 0px 0px 12px rgba(51, 51, 51, 0.5);
+}
+
+.twentytwenty-horizontal .twentytwenty-handle:after {
+    box-shadow: 0 -3px 0 #a7a7c9, 0px 0px 12px rgba(51, 51, 51, 0.5);
+}
+
+// Owl Section
 .owl-carousel {
   margin: 0 0 3.5rem;
 
@@ -99,7 +139,7 @@ a {
 
       &.owl-prev {
         @include carousel-button
-        left: -30px;
+        left: -10px;
 
         span {
           position: absolute;
@@ -110,7 +150,7 @@ a {
 
       &.owl-next {
         @include carousel-button
-        right: -30px;
+        right: -10px;
 
         span {
           position: absolute;
@@ -124,24 +164,26 @@ a {
   @include breakpoint(small only) {
     .owl-nav {
       top: 12%;
-
-      button {
-
-        &.owl-prev {
-          @include carousel-button
-          left: -20px;
-        }
-
-        &.owl-next {
-          @include carousel-button
-          right: -20px;
-        }
-      }
-
     }
   }
 
   .owl-item {
+    @include breakpoint(medium) {
+      .figure {
+        min-height: 350px;
+      }
+    }
+
+    .small-image {
+      padding: 5rem 0 0;
+    }
+
+    @include breakpoint(small only) {
+        .small-image {
+          padding: 2rem 0;
+        }
+    }
+
     figcaption {
       background: rgba(73, 73, 119, 0.9);
       position: absolute;
@@ -163,6 +205,12 @@ a {
       margin: auto;
     }
 
+  }
+}
+
+@include breakpoint(small only) {
+  .owl-carousel {
+    margin: 3.5rem 0 1.5rem;
   }
 }
 

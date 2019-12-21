@@ -1,10 +1,8 @@
 <head>
   <script src="{{root}}assets/js/main.js"></script>
+  <!-- <link rel="stylesheet" href="{{root}}assets/css/reset.css"> -->
   <link rel="stylesheet" href="{{root}}assets/css/style.css">
 </head>
-<div class="grid-container full">
-  <div class="grid-x grid-padding-x grid-margin-x">
-      <div class="large-12 cell">
 
         <!-- <h2>J&P Cycles</h2>
         <div class="grid-x grid-padding-x">
@@ -176,14 +174,24 @@
         </div> -->
 
         <div class="cd-3d-portfolio">
+          <div class="cd-nugget-info">
+            <div onclick="history.go(-1)">
+              <span>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="12px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                  <polygon class="cd-nugget-info-arrow" points="15,7 4.4,7 8.4,3 7,1.6 0.6,8 0.6,8 0.6,8 7,14.4 8.4,13 4.4,9 15,9 "></polygon>
+                </svg>
+                Back
+              </span>
+            </div>
+          </div>
         	<nav class="cd-3d-portfolio-navigation">
         		<div class="cd-wrapper">
-        			<h1>3D Portfolio Template</h1>
+        			<h1>Tamarra's Portfolio</h1>
 
         			<ul>
         				<li><a href="#0" class="selected">J&P Cycles</a></li>
-        				<li><a href="#0">TTI</a></li>
-        				<li><a href="#0">MAG Retail</a></li>
+        				<li><a href="#0">Past Work</a></li>
+        				<li><a href="#0">Misc</a></li>
         			</ul>
         		</div>
         	</nav> <!-- .cd-3d-portfolio-navigation -->
@@ -194,19 +202,30 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 1</h2>
+        							<h2>Site Redesign</h2>
         						</div>
         					</div> <!-- .project-image -->
 
         					<div class="project-content">
         						<div>
-        							<p>
-        								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eius ea sequi distinctio autem repellat, libero esse nam. Quam nesciunt nobis iure cupiditate neque hic magnam optio assumenda unde sequi. Rem cumque iure cum reprehenderit repellendus, autem voluptates maxime ipsa numquam libero nobis saepe laudantium amet praesentium voluptatibus, fuga eveniet.
-        							</p>
+                      <p>This comparison slider shows how the site homepage looked for the past several years on the left and what the homepage looks like now as part of a massive redesign effort. </p>
+                      <div class="grid-container">
+                        <div class="grid-x">
+                          <div class="medium-6 medium-offset-3 cell">
+                            <div id='siteCompare' class='twentytwenty-container'>
+                              <img src='/assets/img/jpc/oldJP.png'>
+                              <img src='/assets/img/jpc/newJP.png'>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-        							<p>
-        								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit quod, molestiae voluptates commodi debitis saepe hic, aut magnam accusantium nostrum error ratione eum vero accusamus autem modi labore doloremque explicabo ut perspiciatis nulla molestias sequi eligendi tempore libero. Dolore iste vitae illum sequi neque quas, dolorem dolor officiis voluptatum quae voluptatibus tenetur molestias soluta blanditiis amet debitis incidunt eaque ratione facere repudiandae cupiditate aspernatur, velit ea itaque. Optio aut harum ad modi dolore doloribus tenetur laboriosam aspernatur minima itaque velit quia, illo sapiente unde, eum autem expedita facilis aliquam, dolorum dicta fuga totam sed pariatur iste! Inventore laudantium qui nostrum, perspiciatis quod! Molestias asperiores facilis explicabo necessitatibus dicta perferendis, esse, quisquam autem corporis ab doloremque nisi voluptas quidem, modi sequi aperiam, illum reiciendis delectus nostrum architecto eligendi sint deleniti voluptate! Magni quia harum eligendi laudantium fuga aspernatur veniam sunt impedit, vitae sit praesentium quam porro dolorem in eveniet iusto. Dicta tempora quo itaque minima expedita accusamus ex perferendis repellat totam! Fugit rerum nihil distinctio ducimus delectus, accusamus enim eos eum nulla fugiat aliquam blanditiis minus omnis maiores, quia numquam placeat. Molestias cupiditate deleniti porro praesentium, aliquam blanditiis maxime iste necessitatibus provident optio ipsum, beatae, libero nostrum, maiores! Temporibus, reiciendis, quibusdam.
-        							</p>
+                      <script type="text/Javascript">
+                        $(window).on('load', function() {
+                          $("#siteCompare").twentytwenty();
+                        });
+                      </script>
+
         						</div>
         					</div> <!-- .project-content -->
 
@@ -218,7 +237,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 2</h2>
+        							<h2>Mobile Menu</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -238,7 +257,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 3</h2>
+        							<h2>Heretic</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -260,15 +279,23 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 1</h2>
+        							<h2>Catalog Cover Concept</h2>
         						</div>
         					</div> <!-- .project-image -->
 
         					<div class="project-content">
         						<div>
-        							<p>
-        								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eius ea sequi distinctio autem repellat, libero esse nam. Quam nesciunt nobis iure cupiditate neque hic magnam optio assumenda unde sequi. Rem cumque iure cum reprehenderit repellendus, autem voluptates maxime ipsa numquam libero nobis saepe laudantium amet praesentium voluptatibus, fuga eveniet.
-        							</p>
+                      <p class="text-center">Two quick concepts I created for an upcoming catalog mailer.</p>
+                      <div class="grid-container">
+                        <div class="grid-x grid-padding-x">
+                          <div class="medium-6 cell">
+                            <img src="/assets/img/jpc/LRv5.png" alt="Catalog Concept 1">
+                          </div>
+                          <div class="medium-6 cell">
+                            <img src="/assets/img/jpc/LRv6.png" alt="Catalog Concept 2">
+                          </div>
+                        </div>
+                      </div>
         						</div>
         					</div> <!-- .project-content -->
 
@@ -280,7 +307,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 2</h2>
+        							<h2>Manufacturer Page</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -300,7 +327,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 3</h2>
+        							<h2>OutCast Racing & SSCC</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -322,15 +349,23 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 1</h2>
+        							<h2>Handlebar Picker</h2>
         						</div>
         					</div> <!-- .project-image -->
 
         					<div class="project-content">
         						<div>
         							<p>
-        								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eius ea sequi distinctio autem repellat, libero esse nam. Quam nesciunt nobis iure cupiditate neque hic magnam optio assumenda unde sequi. Rem cumque iure cum reprehenderit repellendus, autem voluptates maxime ipsa numquam libero nobis saepe laudantium amet praesentium voluptatibus, fuga eveniet.
+        								Selling any products for a motorcycle almost always requires some form of fitment. Handlebars are no exception. This finder was created to help customers easily narrow down options
+                        based on their desired specs and mimics the styles of the pre-existing tire finder.
         							</p>
+                      <div class="grid-container">
+                        <div class="grid-x grid-padding-x">
+                          <div class="cell align-center-middle">
+                            <img src="/assets/img/mrg/Handlebar-Picker-compressed.png" alt="Catalog Concept 1">
+                          </div>
+                        </div>
+                      </div>
         						</div>
         					</div> <!-- .project-content -->
 
@@ -342,7 +377,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 2</h2>
+        							<h2>NetScaler</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -362,7 +397,7 @@
         				<div class="project-wrapper">
         					<div class="project-image">
         						<div class="project-title">
-        							<h2>Project 3</h2>
+        							<h2>Certifications</h2>
         						</div>
         					</div> <!-- .project-image -->
 
@@ -383,9 +418,6 @@
         	<a href="#0" class="cd-top">Top</a>
         </div>
 
-    </div>
-  </div>
-</div>
 
 <script type="text/Javascript">
   $(document).ready(function(){

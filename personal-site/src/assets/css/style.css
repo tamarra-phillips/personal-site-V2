@@ -1,4 +1,4 @@
-/* -------------------------------- 
+/* --------------------------------
 
 Primary style
 
@@ -13,21 +13,30 @@ html {
 
 body {
   font-size: 1.6rem;
-  color: #edeade;
-  background-color: #43202f;
-  font-family: sans-serif;
+  color: #0a0a0a;
+  background: #fff;
+  font-family: 'Montserrat', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: #72a987;
+  color: #0a0a0a;
   text-decoration: none;
 }
 
-/* -------------------------------- 
+ul {
+  margin: 0;
+  list-style-type: none;
+}
 
-Portfolio Navigation 
+ul li {
+  display: inherit;
+}
+
+/* --------------------------------
+
+Portfolio Navigation
 
 -------------------------------- */
 .cd-3d-portfolio-navigation {
@@ -44,8 +53,8 @@ Portfolio Navigation
 .cd-3d-portfolio-navigation h1 {
   font-size: 2rem;
   margin-bottom: .6em;
-  font-family: "Lora", serif;
   font-weight: bold;
+  font-family: 'Courgette', cursive;
 }
 .cd-3d-portfolio-navigation li {
   display: inline-block;
@@ -53,31 +62,48 @@ Portfolio Navigation
 }
 .cd-3d-portfolio-navigation li a {
   display: inline-block;
-  color: #edeade;
-  border: 2px solid #391b28;
+  color: #0a0a0a;
   padding: .6em;
   -webkit-transition: all .2s;
   transition: all .2s;
 }
 .cd-3d-portfolio-navigation li a:hover {
-  border-color: #72a987;
+  background: rgba(73, 73, 119, 0.55);
 }
 .cd-3d-portfolio-navigation li .selected {
-  color: #edeade;
-  background: #72a987;
-  border-color: #72a987;
+  color: #eaeaea;
+  background: rgba(73, 73, 119, 0.9);
   cursor: default;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+
+.cd-3d-portfolio-navigation li .selected:hover {
+  background: rgba(73, 73, 119, 0.9);
+}
+
 @media only screen and (min-width: 768px) {
   .cd-3d-portfolio-navigation h1 {
-    font-size: 3.2rem;
+    font-size: 5rem;
   }
 }
 
-/* -------------------------------- 
+.cd-nugget-info {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(43,43,70,.8);
+    padding: .75rem;
+    color: #eaeaea;
+    cursor: pointer;
+}
 
-Portfolio Projects 
+.cd-nugget-info-arrow {
+  fill:#eaeaea;
+}
+
+/* --------------------------------
+
+Portfolio Projects
 
 -------------------------------- */
 .cd-3d-portfolio {
@@ -97,7 +123,7 @@ Portfolio Projects
   height: 48px;
   width: 48px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(43, 43, 70, 0.8);
   -webkit-transform: scale(0);
       -ms-transform: scale(0);
           transform: scale(0);
@@ -105,6 +131,8 @@ Portfolio Projects
   transition: -webkit-transform .3s 0s;
   transition: transform .3s 0s;
   transition: transform .3s 0s, -webkit-transform .3s 0s;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 .cd-3d-portfolio .close-project:hover {
   background: black;
@@ -117,7 +145,7 @@ Portfolio Projects
   height: 2px;
   top: 50%;
   left: 50%;
-  background: #edeade;
+  background: #eaeaea;
 }
 .cd-3d-portfolio .close-project::before {
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
@@ -145,7 +173,8 @@ Portfolio Projects
 .cd-3d-portfolio .projects {
   /* used to render its children in a 3D space - add perspective */
   -webkit-perspective: 1000px;
-          perspective: 1000px;
+  perspective: 1000px;
+  background: #151522;
 }
 .cd-3d-portfolio .projects .row {
   height: 25vh;
@@ -213,7 +242,7 @@ Portfolio Projects
   /* this is the single project */
   position: absolute;
   z-index: 1;
-  height: 100%;
+  height: 99%;
   width: 100%;
   -webkit-transform: translateZ(50vw);
           transform: translateZ(50vw);
@@ -297,7 +326,7 @@ Portfolio Projects
   /* this is the project background image */
   z-index: 1;
   height: 240%;
-  background-color: #201017;
+  background-color: #fff;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -324,31 +353,31 @@ Portfolio Projects
 }
 .cd-3d-portfolio .projects .row > li.project-1 .project-image::before {
   /* set project background image */
-  background-image: url(../img/photo-1.jpg);
+  background-image: url(../img/jpc/old-new-sideby.png);
 }
 .cd-3d-portfolio .projects .row > li.project-2 .project-image::before {
-  background-image: url(../img/photo-2.jpg);
+  background-image: url(../img/mrg/Masked-Full.png);
 }
 .cd-3d-portfolio .projects .row > li.project-3 .project-image::before {
-  background-image: url(../img/photo-3.jpg);
+  background-image: url(../img/odd_projects/hereticbanner.png);
 }
 .cd-3d-portfolio .projects .row > li.project-4 .project-image::before {
-  background-image: url(../img/photo-4.jpg);
+  background-image: url(../img/jpc/LRv5.png);
 }
 .cd-3d-portfolio .projects .row > li.project-5 .project-image::before {
-  background-image: url(../img/photo-5.jpg);
+  background-image: url(../img/TTI/CompManf.jpg);
 }
 .cd-3d-portfolio .projects .row > li.project-6 .project-image::before {
-  background-image: url(../img/photo-6.jpg);
+  background-image: url(../img/odd_projects/rednumbers-compressor.png);
 }
 .cd-3d-portfolio .projects .row > li.project-7 .project-image::before {
-  background-image: url(../img/photo-7.jpg);
+  background-image: url(../img/mrg/Handlebar-Picker-compressed.png);
 }
 .cd-3d-portfolio .projects .row > li.project-8 .project-image::before {
-  background-image: url(../img/photo-8.jpg);
+  background-image: url(../img/TTI/Netscaler1.jpg);
 }
 .cd-3d-portfolio .projects .row > li.project-9 .project-image::before {
-  background-image: url(../img/photo-9.jpg);
+  background-image: url(../img/certs/GA_Beginners_Cert.png);
 }
 .cd-3d-portfolio .projects .project-title {
   position: relative;
@@ -367,10 +396,11 @@ Portfolio Projects
   transition: transform 0.6s cubic-bezier(0.5, 0, 0.1, 1), -webkit-transform 0.6s cubic-bezier(0.5, 0, 0.1, 1);
 }
 .cd-3d-portfolio .projects h2 {
-  color: #edeade;
+  color: #eaeaea;
+  background: rgba(73, 73, 119, 0.9);
   font-size: 2.2rem;
   font-weight: bold;
-  font-family: "Lora", serif;
+  width: auto;
 }
 .cd-3d-portfolio .projects .project-content {
   position: absolute;
@@ -380,6 +410,7 @@ Portfolio Projects
   width: 100%;
   background: white;
   box-shadow: 0 -5px 0 white;
+  padding: 0 0 4rem 0;
 }
 .cd-3d-portfolio .projects .project-content > div {
   opacity: 0;
@@ -394,7 +425,9 @@ Portfolio Projects
   max-width: 800px;
   margin: 2em auto;
   line-height: 1.6;
-  color: #694d59;
+  color: #0a0a0a;
+  text-rendering: auto;
+  -webkit-font-smoothing: auto;
 }
 .cd-3d-portfolio .projects.project-has-transition .row > li {
   /* the project-has-transition class is used to add a transition to the tranform property of the single projects - it's added when a project is selected (before opening it) and removed when a project is colsed (when the closing animation is finished) */
@@ -582,15 +615,17 @@ Portfolio Projects
 @media only screen and (min-width: 768px) {
   .cd-3d-portfolio .projects h2 {
     font-size: 3.5rem;
+    width: 36%;
+    margin: 0 auto;
   }
   .cd-3d-portfolio .projects p {
     font-size: 2rem;
   }
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-Back to top 
+Back to top
 
 -------------------------------- */
 .cd-top {
@@ -605,7 +640,7 @@ Back to top
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
-  background: rgba(0, 0, 0, 0.6) url(../img/cd-icon-arrow.svg) no-repeat center center;
+  background: rgba(43, 43, 70, 0.8) url(../img/cd-icon-arrow.svg) no-repeat center center;
   visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity .3s, visibility .3s;
