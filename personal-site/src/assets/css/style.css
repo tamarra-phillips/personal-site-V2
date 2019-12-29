@@ -50,6 +50,7 @@ Portfolio Navigation
   height: 25vh;
   text-align: center;
   display: table;
+  background: #2b2b46;
 }
 .cd-3d-portfolio-navigation .cd-wrapper {
   display: table-cell;
@@ -61,6 +62,7 @@ Portfolio Navigation
   margin-bottom: .6em;
   font-weight: bold;
   font-family: 'Courgette', cursive;
+  color: #eaeaea;
 }
 .cd-3d-portfolio-navigation li {
   display: inline-block;
@@ -68,7 +70,7 @@ Portfolio Navigation
 }
 .cd-3d-portfolio-navigation li a {
   display: inline-block;
-  color: #0a0a0a;
+  color: #eaeaea;
   padding: .6em;
   -webkit-transition: all .2s;
   transition: all .2s;
