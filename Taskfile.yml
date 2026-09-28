@@ -63,3 +63,28 @@ tasks:
     cmds:
       - task: clean
       - task: build
+
+  setup:cloudflare:
+    desc: Create a Cloudflare R2 bucket (configure its public custom domain in Cloudflare)
+    requires:
+      vars:
+        - DOMAIN
+        - R2_ACCOUNT_ID
+        - CLOUDFLARE_API_TOKEN
+        - CLOUDFLARE_ZONE_ID
+        - CLOUDFLARE_ACCESS_POLICY_ID
+    cmds:
+      - cmd: bash setup-cloudflare.sh --domain '{{.DOMAIN}}' --account-id '{{.R2_ACCOUNT_ID}}'
+        platforms: [linux, darwin]
+
+  deploy:cloudflare:
+    desc: Deploy existing dist/ to Cloudflare R2 (run task build first when needed)
+    requires:
+      vars:
+        - DOMAIN
+        - R2_ACCOUNT_ID
+        - CLOUDFLARE_R2_ACCESS_KEY_ID
+        - CLOUDFLARE_R2_SECRET_ACCESS_KEY
+    cmds:
+      - cmd: bash deploy-cloudflare.sh --domain '{{.DOMAIN}}' --account-id '{{.R2_ACCOUNT_ID}}'
+        platforms: [linux, darwin]

@@ -19,6 +19,11 @@ The site includes:
 - [Local Prerequisites](#local-prerequisites)
 - [Available Tasks](#available-tasks)
 - [GitHub Actions Build and Release](#github-actions-build-and-release)
+- [Deploying to Cloudflare R2](#deploying-to-cloudflare-r2)
+   - [Cloudflare R2 Configuration](#cloudflare-r2-configuration)
+   - [Cloudflare R2 GitHub Actions](#cloudflare-r2-github-actions)
+   - [Deployment Action](#deployment-action)
+   - [Running Deployment Commands locally](#running-deployment-commands-locally)
 
 ## Quick Start
 
@@ -88,3 +93,139 @@ The repository uses the same Taskfile commands locally and in GitHub Actions:
 The release asset is `dist.tar.gz`. Extract it to deploy the complete static
 site, including all HTML pages, stylesheets, JavaScript, images, and the style
 guide.
+
+## Deploying to Cloudflare R2
+
+Configure the R2 bucket and public custom domain through Cloudflare; Cloudflare
+serves the complete generated site.
+
+### Cloudflare R2 Configuration
+
+This setup uses two distinct credentials, each from a different Cloudflare
+token flow:
+
+1. Get the Cloudflare account and zone IDs and add them to GitHub:
+      - **a.** In **Cloudflare Dashboard**, go to **Domains > Overview** and
+         select the domain you wish to host this site on.
+      - **b.** On the domain's **Overview** page, find the **API** panel on the
+         right and copy the values next to **Account ID** and **Zone ID**.
+      - **c.** In GitHub, open the repository and go to **Settings > Secrets and
+         variables > Actions > Variables**.
+      - **d.** Select **New repository variable** and add `DOMAIN` with the site
+         hostname, `R2_ACCOUNT_ID` with the copied Account ID, and
+         `CLOUDFLARE_ZONE_ID` with the copied Zone ID.
+2. Create a Cloudflare Access Account API token:
+      - **a.** In **Cloudflare Dashboard**, go to **Manage account > Account API
+         tokens**, then select **Create Token**.
+      - **b.** Set a token name, such as `Cloudflare Setup Token`, and choose
+         **Start from scratch**.
+      - **c.** Under **Developer Platform**, select **Edit** for **Workers R2
+         Storage**.
+      - **d.** Under **Cloudflare One / Zero Trust**, select **Edit** for both
+         **Access: Apps** and **Access: Policies**.
+      - **e.** Add a policy, change the resource scope from **Entire Account** to
+         **Specified Domains**, select the domain containing `DOMAIN`, then under
+         **Rules & Configuration** select **Edit** for **Zone Transform Rules**.
+      - **f.** Select **Review token**, then **Create Token**.
+      - **g.** Copy the token value for the GitHub secret
+         `CLOUDFLARE_API_TOKEN`.
+      - **h.** In GitHub, open **Settings > Secrets and variables > Actions >
+         Secrets**, create `CLOUDFLARE_API_TOKEN`, paste the token, and save it.
+3. Create a reusable Cloudflare Access policy:
+      - **a.** In **Cloudflare Zero Trust**, go to **Access controls > Policies**.
+      - **b.** Select the **Reusable policies** tab.
+      - **c.** Select **Add a policy**, configure the Allow policy with the groups
+         and email rules that should access the site, and save it.
+      - **d.** Copy the reusable policy's **Policy ID**.
+      - **e.** In GitHub, create the `CLOUDFLARE_ACCESS_POLICY_ID` repository
+         variable and paste the Policy ID.
+4. Run the GitHub setup workflow:
+      - **a.** Open the repository's **Actions** tab.
+      - **b.** Select **Setup Cloudflare R2** from the workflow list.
+      - **c.** Select **Run workflow**.
+      - **d.** Choose the branch containing the workflow and select **Run
+         workflow** again.
+      - **e.** Wait for the workflow to complete. It creates or reuses the R2
+         bucket, configures its custom domain and root URL rewrite to `index.html`,
+         and attaches the reusable Access policy.
+5. Create the bucket-scoped R2 token:
+      - **a.** After the bucket exists, return to **Storage & databases > R2
+         Object Storage > Manage API Tokens**.
+      - **b.** Under **Account API Tokens**, select **Create Account API token**.
+      - **c.** Choose **Object Read & Write**, select **Apply to specific buckets
+         only**, and select this site's bucket.
+      - **d.** Copy the **Access Key ID** and **Secret Access Key** before
+         selecting **Finish**. These values are shown only once.
+      - **e.** Add them in GitHub as `CLOUDFLARE_R2_ACCESS_KEY_ID` and
+         `CLOUDFLARE_R2_SECRET_ACCESS_KEY` repository secrets.
+
+The `DOMAIN` value must be a hostname in the Cloudflare zone identified by
+`CLOUDFLARE_ZONE_ID`. The setup script creates the custom-domain association
+and Access application through the Cloudflare API. DNS, certificate, and
+Access activation may take time to become active. If an Access application
+already exists for `DOMAIN`, setup applies the configured reusable policy to it.
+
+### Cloudflare R2 GitHub Actions
+
+The [Cloudflare setup workflow](.github/workflows/setup-cloudflare.yml) is
+manual-only and runs `task setup:cloudflare` to configure the R2 bucket, custom
+domain, root URL rewrite, and Access application. Run it before the first
+deployment and rerun it only when infrastructure or Access configuration needs
+to be reconciled.
+
+The [Cloudflare deployment workflow](.github/workflows/deploy-cloudflare.yml)
+deploys `dist.tar.gz` from a GitHub Release. It runs only when manually started
+and can use the latest release or a selected release tag.
+
+### Deployment Action
+
+Choose one deployment path:
+
+1. **Publish a new package:**
+      - **a.** Push to `main` to run **Main CI Build and Publish Release**.
+      - **b.** The workflow builds and packages the complete `dist/` directory.
+      - **c.** A GitHub Release is published only when the generated archive
+         differs from the latest release.
+      - **d.** Publishing a release does not deploy it automatically.
+2. **Deploy a package:**
+      - **a.** In the **Actions** tab, select **Deploy to Cloudflare R2**.
+      - **b.** Select **Run workflow**.
+      - **c.** Enter a release tag, or leave the field blank for the latest
+         release.
+      - **d.** Select **Run workflow** again and wait for deployment to finish.
+
+The deployment workflow uses `DOMAIN`, `R2_ACCOUNT_ID`, and the two
+`CLOUDFLARE_R2_*` secrets. The setup workflow uses the remaining Cloudflare API
+secret and repository variables.
+
+### Running Deployment Commands locally
+
+The commands in this section run deployment locally with Task. For GitHub
+Actions usage, use the workflows above.
+
+```sh
+# Cloudflare setup values:
+export DOMAIN="example.com"
+export R2_ACCOUNT_ID="<account-id>"
+export CLOUDFLARE_API_TOKEN="<cloudflare-setup-token>"
+export CLOUDFLARE_ZONE_ID="<zone-id>"
+export CLOUDFLARE_ACCESS_POLICY_ID="<access-policy-id>"
+
+# One-time bucket setup:
+task setup:cloudflare
+
+# Build, then upload:
+task build
+
+# Bucket-scoped R2 token credentials:
+export CLOUDFLARE_R2_ACCESS_KEY_ID="<access-key-id>"
+export CLOUDFLARE_R2_SECRET_ACCESS_KEY="<secret-access-key>"
+
+task deploy:cloudflare
+```
+
+The setup command requires `DOMAIN`, `R2_ACCOUNT_ID`,
+`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`, and
+`CLOUDFLARE_ACCESS_POLICY_ID`. The deployment command requires `DOMAIN`,
+`R2_ACCOUNT_ID`, `CLOUDFLARE_R2_ACCESS_KEY_ID`, and
+`CLOUDFLARE_R2_SECRET_ACCESS_KEY`.
