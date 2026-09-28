@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare R2
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to deploy (leave blank for latest release)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+env:
+  DOMAIN: ${{ vars.DOMAIN }}
+  R2_ACCOUNT_ID: ${{ vars.R2_ACCOUNT_ID }}
+  CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+  CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Install Task
+        uses: arduino/setup-task@v3
+        with:
+          version: 3.x
+
+      - name: Download Release Asset (dist.tar.gz)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_INPUT: ${{ inputs.tag }}
+        run: |
+          if [ -n "$TAG_INPUT" ]; then
+            echo "Downloading dist.tar.gz from release $TAG_INPUT..."
+            gh release download "$TAG_INPUT" --pattern "dist.tar.gz" --clobber
+          else
+            echo "Downloading dist.tar.gz from latest release..."
+            gh release download --pattern "dist.tar.gz" --clobber
+          fi
+          tar -xzf dist.tar.gz
+
+      - name: Deploy to Cloudflare R2
+        run: task deploy:cloudflare

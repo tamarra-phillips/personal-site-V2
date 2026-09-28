@@ -1,0 +1,29 @@
+name: Setup Cloudflare R2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOMAIN: ${{ vars.DOMAIN }}
+  R2_ACCOUNT_ID: ${{ vars.R2_ACCOUNT_ID }}
+  CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
+  CLOUDFLARE_ACCESS_POLICY_ID: ${{ vars.CLOUDFLARE_ACCESS_POLICY_ID }}
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Install Task
+        uses: arduino/setup-task@v3
+        with:
+          version: 3.x
+
+      - name: Setup Cloudflare R2 and Access
+        run: task setup:cloudflare

@@ -1,0 +1,90 @@
+version: '3'
+
+tasks:
+  docker:run:
+    internal: true
+    requires:
+      vars: [COMMAND]
+    vars:
+      NODE_IMAGE: node:11.9
+      DOCKER_ARGS: ''
+    cmds:
+      - docker run --rm -v "{{.ROOT_DIR}}:/workspace" -w /workspace {{.NODE_IMAGE}} {{.DOCKER_ARGS}} sh -c "{{.COMMAND}}"
+
+  default:
+    desc: List the available tasks
+    cmds:
+      - task --list
+
+  install:
+    desc: Install the locked Node.js dependencies in Docker
+    cmds:
+      - task: docker:run
+        vars:
+          COMMAND: npm ci
+
+  dev:
+    desc: Build the site, start BrowserSync, and watch for changes
+    cmds:
+      - task: docker:run
+        vars:
+          COMMAND: npm ci && npm start
+          DOCKER_ARGS: -p 8000:8000
+
+  build:
+    desc: Create a production build in dist/
+    cmds:
+      - task: docker:run
+        vars:
+          COMMAND: npm ci && npm run build
+
+  verify:
+    desc: Verify the generated site entry point exists
+    cmds:
+      - test -s dist/index.html
+
+  package:
+    desc: Build and package the complete dist/ directory
+    deps:
+      - build
+      - verify
+    cmds:
+      - task: docker:run
+        vars:
+          COMMAND: tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -czf dist.tar.gz -C dist .
+
+  clean:
+    desc: Remove generated site output
+    cmds:
+      - rm -rf dist dist.tar.gz
+
+  ci:
+    desc: Clean and verify the production build
+    cmds:
+      - task: clean
+      - task: build
+
+  setup:cloudflare:
+    desc: Create a Cloudflare R2 bucket (configure its public custom domain in Cloudflare)
+    requires:
+      vars:
+        - DOMAIN
+        - R2_ACCOUNT_ID
+        - CLOUDFLARE_API_TOKEN
+        - CLOUDFLARE_ZONE_ID
+        - CLOUDFLARE_ACCESS_POLICY_ID
+    cmds:
+      - cmd: bash setup-cloudflare.sh --domain '{{.DOMAIN}}' --account-id '{{.R2_ACCOUNT_ID}}'
+        platforms: [linux, darwin]
+
+  deploy:cloudflare:
+    desc: Deploy existing dist/ to Cloudflare R2 (run task build first when needed)
+    requires:
+      vars:
+        - DOMAIN
+        - R2_ACCOUNT_ID
+        - CLOUDFLARE_R2_ACCESS_KEY_ID
+        - CLOUDFLARE_R2_SECRET_ACCESS_KEY
+    cmds:
+      - cmd: bash deploy-cloudflare.sh --domain '{{.DOMAIN}}' --account-id '{{.R2_ACCOUNT_ID}}'
+        platforms: [linux, darwin]
