@@ -3,6 +3,7 @@ node_modules
 npm-debug.log
 bower_components
 dist
+dist.tar.gz
 *.swp
 .cache
 .idea

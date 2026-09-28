@@ -1,0 +1,86 @@
+name: Main CI Build and Publish Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: main-ci-release
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Task
+        uses: arduino/setup-task@v3
+        with:
+          version: 3.x
+
+      - name: Package generated site
+        run: task package
+
+      - name: Check generated output
+        id: output
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          latest_tag=$(gh release view --json tagName --jq '.tagName' 2>/dev/null || true)
+
+          if [[ -z "$latest_tag" ]]; then
+            echo "No previous release found; publishing the generated output."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          mkdir -p previous-release
+          if ! gh release download "$latest_tag" --pattern dist.tar.gz --dir previous-release; then
+            echo "Previous release asset could not be downloaded; publishing the generated output."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          current_hash=$(sha256sum dist.tar.gz | cut -d ' ' -f 1)
+          previous_hash=$(sha256sum previous-release/dist.tar.gz | cut -d ' ' -f 1)
+
+          if [[ "$current_hash" == "$previous_hash" ]]; then
+            echo "Generated output matches the latest release; skipping publication."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Generated output differs from the latest release; publishing."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Resolve Release Tag
+        id: release
+        if: steps.output.outputs.changed == 'true'
+        run: |
+          release_date=$(date -u +'%Y.%m.%d')
+          tag_prefix="v${release_date}."
+          latest_sequence=$(git ls-remote --tags origin "refs/tags/${tag_prefix}*" | awk -v prefix="$tag_prefix" '
+            $2 ~ ("^refs/tags/" prefix "[0-9]+$") {
+              sequence = $2
+              sub("^refs/tags/" prefix, "", sequence)
+              if (sequence + 0 > latest) latest = sequence + 0
+            }
+            END { if (latest) print latest }
+          ')
+          next_sequence=$(( ${latest_sequence:-0} + 1 ))
+          echo "tag=${tag_prefix}${next_sequence}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: steps.output.outputs.changed == 'true'
+        with:
+          tag_name: ${{ steps.release.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Release ${{ steps.release.outputs.tag }}
+          files: dist.tar.gz
+          fail_on_unmatched_files: true
