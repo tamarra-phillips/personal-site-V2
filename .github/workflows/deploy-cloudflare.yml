@@ -41,7 +41,8 @@ jobs:
             echo "Downloading dist.tar.gz from latest release..."
             gh release download --pattern "dist.tar.gz" --clobber
           fi
-          tar -xzf dist.tar.gz
+          mkdir -p dist
+          tar -xzf dist.tar.gz -C dist
 
       - name: Deploy to Cloudflare R2
         run: task deploy:cloudflare
