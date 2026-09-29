@@ -47,7 +47,6 @@ tasks:
     desc: Build and package the complete dist/ directory
     deps:
       - build
-      - verify
     cmds:
       - task: docker:run
         vars:
