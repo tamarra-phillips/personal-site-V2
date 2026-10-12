@@ -64,14 +64,13 @@ tasks:
       - task: build
 
   setup:cloudflare:
-    desc: Create a Cloudflare R2 bucket (configure its public custom domain in Cloudflare)
+    desc: Set up R2 and optionally apply or remove the domain's Access policy
     requires:
       vars:
         - DOMAIN
         - R2_ACCOUNT_ID
         - CLOUDFLARE_API_TOKEN
         - CLOUDFLARE_ZONE_ID
-        - CLOUDFLARE_ACCESS_POLICY_ID
     cmds:
       - cmd: bash setup-cloudflare.sh --domain '{{.DOMAIN}}' --account-id '{{.R2_ACCOUNT_ID}}'
         platforms: [linux, darwin]

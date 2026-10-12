@@ -25,5 +25,5 @@ jobs:
         with:
           version: 3.x
 
-      - name: Setup Cloudflare R2 and Access
+      - name: Setup Cloudflare R2
         run: task setup:cloudflare
